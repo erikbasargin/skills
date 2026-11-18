@@ -2,8 +2,6 @@
 
 ## Grilling
 
-The [grilling skill](skills/productivity/grilling/SKILL.md) comes from
-[Matt Pocock’s skills repository](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md).
-
-Copyright (c) 2026 Matt Pocock. Distributed under the
-[MIT License](skills/productivity/grilling/LICENSE).
+Erik Basargin adapted the [grilling skill](skills/productivity/grilling/SKILL.md)
+from [Matt Pocock’s original](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md).
+The [MIT license](skills/productivity/grilling/LICENSE) includes both copyright notices.
