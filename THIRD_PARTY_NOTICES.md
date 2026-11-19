@@ -1,7 +1,8 @@
 # Third-party notices
 
-## Grilling
+## Matt Pocock’s skills
 
-Erik Basargin adapted the [grilling skill](skills/productivity/grilling/SKILL.md)
-from [Matt Pocock’s original](https://github.com/mattpocock/skills/blob/main/skills/productivity/grilling/SKILL.md).
-The [MIT license](skills/productivity/grilling/LICENSE) includes both copyright notices.
+This repository includes skills imported or adapted from
+[Matt Pocock’s skills repository](https://github.com/mattpocock/skills).
+The `LICENSE` file alongside each of these skills contains the MIT license text
+and the applicable copyright notices, including any notices for modifications.
