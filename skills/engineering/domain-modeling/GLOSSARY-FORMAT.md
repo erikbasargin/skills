@@ -31,18 +31,20 @@ _Avoid_: Client, buyer, account
 
 ## Single vs multi-context repos
 
-**Single context (most repos):** One `GLOSSARY.md` at the repo root.
+Put each glossary in the owning module's DocC catalog. In a Swift package with the default target layout, that is `Sources/<Target>/Documentation.docc/GLOSSARY.md`. Follow the target's actual source path and catalog name.
 
-**Multiple contexts:** A `GLOSSARY-MAP.md` at the repo root lists the contexts, where they live, and how they relate to each other:
+For a single context, use the owning module's glossary. For multiple contexts in different modules, each catalog can have its own `GLOSSARY.md`. If multiple contexts share one catalog, give their articles distinct filenames such as `Ordering-Glossary.md` and `Billing-Glossary.md`.
+
+For multiple contexts, use a repository-level `GLOSSARY-MAP.md` to list the contexts, link to their glossary files with relative Markdown links, and explain how they relate.
 
 ```md
 # Glossary Map
 
 ## Contexts
 
-- [Ordering](./src/ordering/GLOSSARY.md): receives and tracks customer orders
-- [Billing](./src/billing/GLOSSARY.md): generates invoices and processes payments
-- [Fulfillment](./src/fulfillment/GLOSSARY.md): manages warehouse picking and shipping
+- [Ordering](./Sources/Ordering/Documentation.docc/GLOSSARY.md) receives and tracks customer orders.
+- [Billing](./Sources/Billing/Documentation.docc/GLOSSARY.md) generates invoices and processes payments.
+- [Fulfillment](./Sources/Fulfillment/Documentation.docc/GLOSSARY.md) manages warehouse picking and shipping.
 
 ## Relationships
 
@@ -51,10 +53,4 @@ _Avoid_: Client, buyer, account
 - **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
 ```
 
-The skill infers which structure applies:
-
-- If `GLOSSARY-MAP.md` exists, read it to find contexts
-- If only a root `GLOSSARY.md` exists, single context
-- If neither exists, create a root `GLOSSARY.md` lazily when the first term is resolved
-
-When multiple contexts exist, infer which one the current topic relates to. If unclear, ask.
+Read the existing map when available. Otherwise, look for the glossary in the module that owns the relevant domain rules. When the first term is resolved, create the glossary in that module's catalog if needed. If ownership is unclear, ask which context the term belongs to.

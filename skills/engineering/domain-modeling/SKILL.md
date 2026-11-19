@@ -9,41 +9,49 @@ Actively build and sharpen the project's domain model as you design. This is the
 
 ## File structure
 
-Most repos have a single context:
+Keep each glossary in the DocC catalog of the module that owns its domain language. In SwiftPM, a target's catalog sits alongside its source files, under `Sources/<Target>/` by default. Use the project's existing catalog name and target path where they differ. [Swift-DocC guide](https://www.swift.org/documentation/docc/documenting-a-swift-framework-or-package)
+
+For a package with a single target and context:
 
 ```
 /
-├── GLOSSARY.md
-├── docs/
-│   └── adr/
-│       ├── 0001-event-sourced-orders.md
-│       └── 0002-postgres-for-write-model.md
-└── src/
+├── Package.swift
+└── Sources/
+    └── Ordering/
+        └── Documentation.docc/
+            ├── GLOSSARY.md
+            └── ADR/
+                ├── 0001-event-sourced-orders.md
+                └── 0002-postgres-for-write-model.md
 ```
 
-If a `GLOSSARY-MAP.md` exists at the root, the repo has multiple contexts. The map points to where each one lives:
+When contexts are owned by different modules, keep each glossary with its module and use a repository-level `GLOSSARY-MAP.md` to link to them. Keep ADRs under `ADR/` in the catalog designated for those records. The repository-level catalog in this example can be built separately from the target catalogs.
 
 ```
 /
+├── Package.swift
 ├── GLOSSARY-MAP.md
-├── docs/
-│   └── adr/                          ← system-wide decisions
-├── src/
-│   ├── ordering/
-│   │   ├── GLOSSARY.md
-│   │   └── docs/adr/                 ← context-specific decisions
-│   └── billing/
-│       ├── GLOSSARY.md
-│       └── docs/adr/
+├── Documentation.docc/
+│   └── ADR/
+└── Sources/
+    ├── Ordering/
+    │   └── Documentation.docc/
+    │       └── GLOSSARY.md
+    ├── Billing/
+    │   └── Documentation.docc/
+    │       └── GLOSSARY.md
+    └── Fulfillment/
+        └── Documentation.docc/
+            └── GLOSSARY.md
 ```
 
-Create files lazily: only when you have something to write. If no `GLOSSARY.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+Create the relevant glossary when the first term is resolved. Create the designated catalog's `ADR/` directory when the first ADR is needed.
 
 ## During the session
 
 ### Challenge against the glossary
 
-When the user uses a term that conflicts with the existing language in `GLOSSARY.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
+When the user uses a term that conflicts with the existing language in the relevant glossary, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
 
 ### Sharpen fuzzy language
 
@@ -57,11 +65,11 @@ When domain relationships are being discussed, stress-test them with specific sc
 
 When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible. Which is right?"
 
-### Update GLOSSARY.md inline
+### Update the glossary inline
 
-When a term is resolved, update `GLOSSARY.md` right there. Don't batch these up: capture them as they happen. Use the format in [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
+When a term is resolved, update the relevant glossary right there. Don't batch these up: capture them as they happen. Use the format in [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
 
-`GLOSSARY.md` should be totally devoid of implementation details. Do not treat `GLOSSARY.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
+Keep glossary entries focused on domain terminology and definitions.
 
 ### Offer ADRs sparingly
 
